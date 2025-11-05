@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Script para comprimir archivos GTFS grandes y bases de datos SQLite
 # Los archivos .txt grandes de GTFS y .db se comprimen individualmente

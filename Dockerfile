@@ -9,8 +9,8 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci
+# Install dependencies (skip postinstall - we don't need to decompress in build stage)
+RUN npm ci --ignore-scripts
 
 # Copy source code
 COPY tsconfig.json ./
@@ -27,22 +27,16 @@ RUN apk add --no-cache sqlite-libs unzip
 
 WORKDIR /app
 
-# Copy package files and install production dependencies only
+# Copy everything needed for postinstall BEFORE npm ci
 COPY package*.json ./
+COPY transport-data ./transport-data
+COPY scripts/decompress-gtfs-data.sh ./scripts/
+
+# Install production dependencies (postinstall will decompress GTFS data)
 RUN npm ci --omit=dev
 
 # Copy built application from builder
 COPY --from=builder /app/dist ./dist
-
-# Copy transport data (GTFS files - includes .txt.zip files)
-COPY transport-data ./transport-data
-
-# Copy decompression script
-COPY scripts/decompress-gtfs-data.sh ./scripts/
-
-# Decompress GTFS data files
-RUN chmod +x ./scripts/decompress-gtfs-data.sh && \
-    ./scripts/decompress-gtfs-data.sh
 
 # Create directory for logs and database files
 RUN mkdir -p /app/logs && \

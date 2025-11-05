@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "madrid-transport": {
+      "type": "docker",
+      "image": "mcp/mcp-madrid-public-transport:latest",
+      "env": {
+        "DEBUG": "true",
+        "DEBUG_LEVEL": "info"
+      }
+    }
+  }
+}

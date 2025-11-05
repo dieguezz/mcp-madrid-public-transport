@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Script para descomprimir archivos GTFS y bases de datos SQLite
 # Se usa en desarrollo local y en Docker build

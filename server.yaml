@@ -15,22 +15,34 @@ meta:
     - gtfs
 about:
   title: Madrid Public Transport
-  description: Real-time public transportation information for Madrid, Spain. Query arrival times for Metro, EMT buses, urban/interurban buses, and Cercanías trains using the Model Context Protocol.
-  icon: https://raw.githubusercontent.com/dieguezz/mcp-madrid-public-transport/main/.github/madrid-transport-icon.png
+  description: |
+    Real-time public transportation information for Madrid, Spain. Query arrival times for Metro, EMT buses, urban/interurban buses, and Cercanías trains using the Model Context Protocol.
+
+    Available without credentials:
+    - Metro de Madrid (all lines)
+    - Cercanías trains (Renfe)
+
+    Requires free EMT API credentials (https://openapi.emtmadrid.es/):
+    - EMT buses (Madrid city buses)
+    - Urban/interurban buses
+  icon: https://raw.githubusercontent.com/dieguezz/mcp-madrid-public-transport/main/assets/icon.png
 source:
   project: https://github.com/dieguezz/mcp-madrid-public-transport
   commit: HEAD
 config:
-  description: Configure Madrid Transport MCP Server with your EMT API credentials. Metro and train data are publicly available, but EMT bus data requires free API credentials from https://openapi.emtmadrid.es/
+  description: |
+    Configure Madrid Transport MCP Server with EMT API credentials (optional).
+
+    Metro and train data work without credentials. For bus arrivals, register for free at https://openapi.emtmadrid.es/ to get your Client ID and Pass Key.
   secrets:
     - name: mcp-madrid-public-transport.emt_client_id
       env: EMT_CLIENT_ID
       example: your_emt_client_id_here
-      description: EMT OpenAPI Client ID (register at https://openapi.emtmadrid.es/)
+      description: "OPTIONAL: EMT OpenAPI Client ID for bus arrivals (register at https://openapi.emtmadrid.es/). Not required for Metro and train data."
     - name: mcp-madrid-public-transport.emt_pass_key
       env: EMT_PASS_KEY
       example: your_emt_passkey_here
-      description: EMT OpenAPI Pass Key (register at https://openapi.emtmadrid.es/)
+      description: "OPTIONAL: EMT OpenAPI Pass Key for bus arrivals (register at https://openapi.emtmadrid.es/). Not required for Metro and train data."
   env:
     - name: DEBUG
       example: "false"
