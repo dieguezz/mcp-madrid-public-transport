@@ -1,10 +1,9 @@
 {
   "mcpServers": {
     "madrid-transport": {
-      "command": "npx",
+      "command": "node",
       "args": [
-        "-y",
-        "mcp-madrid-public-transport"
+        "/absolute/path/to/mcp-madrid-public-transport/dist/index.js"
       ],
       "env": {
         "EMT_CLIENT_ID": "your_emt_client_id_here",

@@ -85,36 +85,21 @@ Add the server to your Claude Desktop configuration file:
 **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
 **Windows**: `%APPDATA%/Claude/claude_desktop_config.json`
 
-#### Option 1: NPX (Recommended for users)
+#### Configuration
 
-**Note**: This option requires the package to be published on npm. See [Publishing to npm](#publishing-to-npm) section below.
-
-```json
-{
-  "mcpServers": {
-    "madrid-transport": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "mcp-madrid-public-transport"
-      ],
-      "env": {
-        "EMT_CLIENT_ID": "your_emt_client_id_here",
-        "EMT_PASS_KEY": "your_emt_pass_key_here"
-      }
-    }
-  }
-}
-```
-
-**Quick setup**: Copy the example configuration file:
+**Quick setup**: Copy and edit the example configuration file:
 
 ```bash
+# macOS
 cp claude_desktop_config.example.json ~/Library/Application\ Support/Claude/claude_desktop_config.json
-# Then edit the file to add your EMT credentials
+
+# Windows (PowerShell)
+Copy-Item claude_desktop_config.example.json $env:APPDATA\Claude\claude_desktop_config.json
+
+# Then edit the file to add your EMT credentials and update the path
 ```
 
-#### Option 2: Local Development
+**Manual configuration**:
 
 ```json
 {
@@ -133,7 +118,20 @@ cp claude_desktop_config.example.json ~/Library/Application\ Support/Claude/clau
 }
 ```
 
-#### Option 3: Docker (via Docker Desktop MCP)
+**Important**:
+- Replace `/absolute/path/to/mcp-madrid-public-transport` with the actual path where you cloned this repository
+- Add your EMT credentials (get them free at https://openapi.emtmadrid.es/)
+- Make sure you've run `npm install` and `npm run build` first
+
+#### Docker Option (Alternative)
+
+If you prefer to use Docker, first build the image:
+
+```bash
+docker build -t mcp-madrid-transport .
+```
+
+Then configure Claude Desktop:
 
 ```json
 {
@@ -146,7 +144,7 @@ cp claude_desktop_config.example.json ~/Library/Application\ Support/Claude/clau
         "--rm",
         "-e", "EMT_CLIENT_ID=your_emt_client_id_here",
         "-e", "EMT_PASS_KEY=your_emt_pass_key_here",
-        "ghcr.io/dieguezz/mcp-madrid-public-transport:latest"
+        "mcp-madrid-transport"
       ]
     }
   }
@@ -483,91 +481,6 @@ npm run setup:data
 | `CACHE_TTL_METRO` | No | `30` | Metro cache TTL (seconds) |
 | `CACHE_TTL_BUS` | No | `10` | Bus cache TTL (seconds) |
 | `CACHE_TTL_TRAIN` | No | `10` | Train cache TTL (seconds) |
-
-## 📦 Publishing
-
-### Publishing to npm
-
-To publish this package to npm (making it available via `npx`):
-
-1. **Create an npm account**: https://www.npmjs.com/signup
-
-2. **Login to npm**:
-   ```bash
-   npm login
-   ```
-
-3. **Update package.json** (if needed):
-   ```json
-   {
-     "name": "mcp-madrid-public-transport",
-     "version": "1.0.0",
-     "description": "MCP server for Madrid public transportation real-time data",
-     "repository": {
-       "type": "git",
-       "url": "https://github.com/dieguezz/mcp-madrid-public-transport.git"
-     }
-   }
-   ```
-
-4. **Build and publish**:
-   ```bash
-   npm run build
-   npm publish
-   ```
-
-5. **Verify publication**:
-   ```bash
-   npx mcp-madrid-public-transport
-   ```
-
-### Publishing to Docker Hub / GHCR
-
-**Option 1: Docker Hub**
-
-```bash
-# Build the image
-docker build -t your-dockerhub-username/mcp-madrid-public-transport:latest .
-
-# Login to Docker Hub
-docker login
-
-# Push the image
-docker push your-dockerhub-username/mcp-madrid-public-transport:latest
-```
-
-**Option 2: GitHub Container Registry (GHCR)**
-
-```bash
-# Build the image
-docker build -t ghcr.io/dieguezz/mcp-madrid-public-transport:latest .
-
-# Login to GHCR
-echo $GITHUB_TOKEN | docker login ghcr.io -u dieguezz --password-stdin
-
-# Push the image
-docker push ghcr.io/dieguezz/mcp-madrid-public-transport:latest
-```
-
-### Publishing to Docker MCP Registry
-
-To submit this server to the official Docker MCP Registry:
-
-1. **Ensure `tools.json` exists** (already included in this repo)
-
-2. **Ensure Dockerfile is properly configured** (already done)
-
-3. **Follow the Docker MCP Registry contribution guide**:
-   - Repository: https://github.com/docker/mcp-registry
-   - Guide: https://github.com/docker/mcp-registry/blob/main/CONTRIBUTING.md
-
-4. **Create a Pull Request** with the server metadata
-
-The repository is already configured with:
-- ✅ `Dockerfile` in root
-- ✅ `tools.json` for tool discovery
-- ✅ Automated decompression during Docker build
-- ✅ Proper `.dockerignore` configuration
 
 ## 📄 License
 
