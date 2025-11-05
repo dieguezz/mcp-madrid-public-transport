@@ -27,10 +27,21 @@
     "metro",
     "bus",
     "train",
-    "real-time"
+    "real-time",
+    "model-context-protocol",
+    "claude",
+    "ai-tools"
   ],
-  "author": "",
+  "author": "Diego Dieguez",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dieguezz/mcp-madrid-public-transport.git"
+  },
+  "homepage": "https://github.com/dieguezz/mcp-madrid-public-transport#readme",
+  "bugs": {
+    "url": "https://github.com/dieguezz/mcp-madrid-public-transport/issues"
+  },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.4",
     "better-sqlite3": "^12.4.1",

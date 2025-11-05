@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "madrid-transport": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-madrid-public-transport"
+      ],
+      "env": {
+        "EMT_CLIENT_ID": "your_emt_client_id_here",
+        "EMT_PASS_KEY": "your_emt_pass_key_here",
+        "DEBUG": "false",
+        "DEBUG_LEVEL": "info"
+      }
+    }
+  }
+}
