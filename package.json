@@ -1,0 +1,56 @@
+{
+  "name": "mcp-madrid-public-transport",
+  "version": "1.0.0",
+  "description": "MCP server for Madrid public transportation real-time data",
+  "main": "dist/index.js",
+  "type": "module",
+  "bin": {
+    "mcp-madrid-public-transport": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "test:api": "tsx tests/api-test.ts",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "setup:data": "chmod +x scripts/decompress-gtfs-data.sh && scripts/decompress-gtfs-data.sh",
+    "compress:data": "chmod +x scripts/compress-gtfs-data.sh && scripts/compress-gtfs-data.sh",
+    "postinstall": "npm run setup:data"
+  },
+  "keywords": [
+    "mcp",
+    "madrid",
+    "transport",
+    "metro",
+    "bus",
+    "train",
+    "real-time"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "better-sqlite3": "^12.4.1",
+    "csv-parse": "^5.5.6",
+    "dotenv": "^16.4.5",
+    "fp-ts": "^2.16.9",
+    "lru-cache": "^11.2.2",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^22.10.2",
+    "@typescript-eslint/eslint-plugin": "^8.18.2",
+    "@typescript-eslint/parser": "^8.18.2",
+    "eslint": "^9.17.0",
+    "prettier": "^3.4.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

@@ -1,0 +1,89 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment variables
+.env
+.env.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# IDE
+.vscode/
+.idea/
+.claude/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test coverage
+coverage/
+
+# Temporary files
+*.tmp
+.cache/
+
+# GTFS static data (large files, download on-demand)
+transport-data/train/gtfs-static/
+
+# OSM data (not used in current implementation)
+transport-data/osm/
+
+# GTFS large text files (kept as .txt.zip in git)
+# These are automatically decompressed during setup
+transport-data/**/*.txt
+# But we want to keep documentation
+!transport-data/**/README.md
+!transport-data/**/ENDPOINTS.md
+# And keep compressed files
+!transport-data/**/*.txt.zip
+
+# GTFS complete archives (not needed, we use individual files)
+transport-data/**/*_gtfs.zip
+
+# GTFS files we don't use in the application
+transport-data/**/agency.txt
+transport-data/**/calendar.txt
+transport-data/**/calendar_dates.txt
+transport-data/**/fare_attributes.txt
+transport-data/**/fare_rules.txt
+transport-data/**/feed_info.txt
+transport-data/**/frequencies.txt
+transport-data/**/transfers.txt
+transport-data/**/trips.txt
+transport-data/**/stop_times.txt
+transport-data/**/shapes.txt
+
+# CSV files we don't use
+transport-data/train/train_itineraries.csv
+
+# Keep only the CSV files we actually use
+!transport-data/metro/metro_stations.csv
+!transport-data/train/train_stations.csv
+
+# Database files (created at runtime)
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+gtfs-*.db
+
+# Allow compressed database files for Git storage
+!*.db.zip
+
+# Internal documentation (not for end users)
+DOCKER_REGISTRY_SUBMISSION.md
+docs/
+**/IMPLEMENTATION.md
+**/QUICKSTART.md
+**/*_SUMMARY.md
+**/*_SUCCESS.md
+**/*_COMPLETE.md
+**/*_PLAN.md

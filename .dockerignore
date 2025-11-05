@@ -1,0 +1,70 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Node
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Build output (will be built inside Docker)
+dist
+
+# Development files
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# Testing
+coverage
+.nyc_output
+
+# Logs
+*.log
+logs
+mcp-debug.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation (not needed in image)
+*.md
+!README.md
+docs
+
+# CI/CD
+.github
+.gitlab-ci.yml
+.travis.yml
+
+# Docker
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# Database files (will be created at runtime)
+*.db
+*.db-journal
+
+# Temporary files
+tmp
+temp
+*.tmp
+
+# Claude configuration
+.claude
+
+# Test files
+test
+tests
+*.test.ts
+*.spec.ts

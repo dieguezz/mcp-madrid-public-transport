@@ -1,0 +1,80 @@
+[
+  {
+    "name": "get_metro_arrivals",
+    "description": "Get real-time arrival times for Madrid Metro trains at a specific station. Returns estimated arrival times, destinations, platforms, and line information.",
+    "arguments": [
+      {
+        "name": "station",
+        "type": "string",
+        "desc": "Station name or code (e.g., 'Colombia', 'Sol', 'Nuevos Ministerios', 'par_4_211')"
+      },
+      {
+        "name": "line",
+        "type": "string",
+        "desc": "Optional: Filter by Metro line number (e.g., '8', '9', 'L8')"
+      },
+      {
+        "name": "direction",
+        "type": "string",
+        "desc": "Optional: Filter by direction/destination (e.g., 'Nuevos Ministerios', 'Aeropuerto')"
+      },
+      {
+        "name": "count",
+        "type": "number",
+        "desc": "Optional: Number of arrivals to return (default: 2, max: 10)"
+      }
+    ]
+  },
+  {
+    "name": "get_bus_arrivals",
+    "description": "Get real-time arrival times for buses (EMT, urban, interurban) at a specific stop. Returns estimated arrival times, destinations, distances, and incident information. Requires EMT API credentials.",
+    "arguments": [
+      {
+        "name": "stop",
+        "type": "string",
+        "desc": "Stop name or number (e.g., 'Plaza de Castilla', 'Cibeles', '3000', '4521')"
+      },
+      {
+        "name": "line",
+        "type": "string",
+        "desc": "Optional: Filter by bus line number (e.g., '27', '51', 'N1')"
+      },
+      {
+        "name": "direction",
+        "type": "string",
+        "desc": "Optional: Filter by direction/destination"
+      },
+      {
+        "name": "count",
+        "type": "number",
+        "desc": "Optional: Number of arrivals to return (default: 2, max: 10)"
+      }
+    ]
+  },
+  {
+    "name": "get_train_arrivals",
+    "description": "Get real-time arrival times for Cercanías (commuter trains) at a station. Returns estimated arrival times, destinations, platforms, delays, and line information.",
+    "arguments": [
+      {
+        "name": "station",
+        "type": "string",
+        "desc": "Station name or code (e.g., 'Atocha', 'Chamartín', 'Fuenlabrada', '10100')"
+      },
+      {
+        "name": "line",
+        "type": "string",
+        "desc": "Optional: Filter by Cercanías line (e.g., 'C-1', 'C-2', 'C-5')"
+      },
+      {
+        "name": "direction",
+        "type": "string",
+        "desc": "Optional: Filter by destination station"
+      },
+      {
+        "name": "count",
+        "type": "number",
+        "desc": "Optional: Number of arrivals to return (default: 2, max: 10)"
+      }
+    ]
+  }
+]
