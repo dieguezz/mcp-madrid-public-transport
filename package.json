@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "type": "module",
   "bin": {
-    "mcp-madrid-public-transport": "./dist/index.js"
+    "mcp-madrid-public-transport": "dist/index.js"
   },
   "scripts": {
     "build": "tsc",
@@ -36,7 +36,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dieguezz/mcp-madrid-public-transport.git"
+    "url": "git+https://github.com/dieguezz/mcp-madrid-public-transport.git"
   },
   "homepage": "https://github.com/dieguezz/mcp-madrid-public-transport#readme",
   "bugs": {
