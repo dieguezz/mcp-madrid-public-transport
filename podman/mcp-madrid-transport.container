@@ -1,0 +1,55 @@
+# Podman Quadlet Container Unit
+# Place this file in ~/.config/containers/systemd/ (user) or /etc/containers/systemd/ (system)
+# Then run: systemctl --user daemon-reload && systemctl --user start mcp-madrid-transport
+#
+# This file follows the Podman Quadlet format for systemd integration
+
+[Unit]
+Description=MCP Madrid Transport HTTP Server
+After=network-online.target
+Wants=network-online.target
+
+[Container]
+# Image to use (build it first with: podman build -t mcp-madrid-transport .)
+Image=localhost/mcp-madrid-transport:latest
+
+# Container name
+ContainerName=mcp-madrid-transport
+
+# Restart policy
+Restart=always
+
+# Publish ports
+PublishPort=3000:3000
+
+# Environment variables from .env file
+# Place your .env file in the same directory as this .container file
+EnvironmentFile=%h/.config/containers/systemd/mcp-madrid-transport.env
+
+# Volumes for persistence
+Volume=%h/.local/share/mcp-madrid-transport/logs:/app/logs:Z
+Volume=%h/.local/share/mcp-madrid-transport/data:/app/data:Z
+
+# Health check (uses the container's built-in HEALTHCHECK)
+HealthCmd=curl -f http://localhost:3000/health || exit 1
+HealthInterval=30s
+HealthTimeout=10s
+HealthRetries=3
+HealthStartPeriod=40s
+
+# Security options
+SecurityLabelDisable=false
+User=1000:1000
+
+# Logging
+LogDriver=journald
+
+[Service]
+# Restart policy
+Restart=always
+TimeoutStartSec=900
+TimeoutStopSec=70
+
+[Install]
+# Start automatically on boot
+WantedBy=default.target
