@@ -1,7 +1,15 @@
 // Re-export fp-ts Either with convenience functions
-export { Either, left, right, isLeft, isRight } from 'fp-ts/lib/Either.js';
-export { map, chain, fold, getOrElse } from 'fp-ts/lib/Either.js';
 import * as E from 'fp-ts/lib/Either.js';
+
+export type Either<L, R> = E.Either<L, R>;
+export const left = E.left;
+export const right = E.right;
+export const isLeft = E.isLeft;
+export const isRight = E.isRight;
+export const map = E.map;
+export const chain = E.chain;
+export const fold = E.fold;
+export const getOrElse = E.getOrElse;
 
 // Additional utility functions
 export const fromNullable = <E, A>(e: E) => (a: A | null | undefined): E.Either<E, A> =>

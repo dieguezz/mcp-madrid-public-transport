@@ -1,7 +1,15 @@
 // Re-export fp-ts Option with convenience functions
-export { Option, some, none, isSome, isNone } from 'fp-ts/lib/Option.js';
-export { map, chain, fold, getOrElse } from 'fp-ts/lib/Option.js';
 import * as O from 'fp-ts/lib/Option.js';
+
+export type Option<A> = O.Option<A>;
+export const some = O.some;
+export const none = O.none;
+export const isSome = O.isSome;
+export const isNone = O.isNone;
+export const map = O.map;
+export const chain = O.chain;
+export const fold = O.fold;
+export const getOrElse = O.getOrElse;
 
 // Additional utility functions
 export const fromNullable = <A>(a: A | null | undefined): O.Option<A> =>

@@ -1,0 +1,247 @@
+{
+  "name": "MCP Madrid Transport - Example",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "1",
+      "name": "When clicking 'Test workflow'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://mcp-madrid.binoid.dev/mcp",
+        "authentication": "none",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": []
+        },
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"initialize\",\n  \"params\": {\n    \"protocolVersion\": \"2024-11-05\",\n    \"capabilities\": {},\n    \"clientInfo\": {\n      \"name\": \"n8n\",\n      \"version\": \"1.0.0\"\n    }\n  }\n}",
+        "options": {}
+      },
+      "id": "2",
+      "name": "1. Initialize MCP Session",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [470, 300],
+      "notes": "Inicializa una sesión MCP y obtiene el sessionId"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "sessionId",
+              "name": "sessionId",
+              "value": "={{ $json.headers['mcp-session-id'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3",
+      "name": "Extract Session ID",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [690, 300],
+      "notes": "Extrae el sessionId del header de respuesta"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://mcp-madrid.binoid.dev/mcp",
+        "authentication": "none",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "mcp-session-id",
+              "value": "={{ $('Extract Session ID').item.json.sessionId }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 2,\n  \"method\": \"tools/list\"\n}",
+        "options": {}
+      },
+      "id": "4",
+      "name": "2. List Available Tools",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [910, 300],
+      "notes": "Lista todas las herramientas disponibles en el servidor MCP"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://mcp-madrid.binoid.dev/mcp",
+        "authentication": "none",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "mcp-session-id",
+              "value": "={{ $('Extract Session ID').item.json.sessionId }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 3,\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"get_metro_arrivals\",\n    \"arguments\": {\n      \"station\": \"Colombia\",\n      \"line\": \"8\",\n      \"count\": 3\n    }\n  }\n}",
+        "options": {}
+      },
+      "id": "5",
+      "name": "3. Get Metro Arrivals - Colombia",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1130, 200],
+      "notes": "Obtiene los próximos 3 trenes del metro en la estación Colombia (L8)"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://mcp-madrid.binoid.dev/mcp",
+        "authentication": "none",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "mcp-session-id",
+              "value": "={{ $('Extract Session ID').item.json.sessionId }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 4,\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"get_bus_arrivals\",\n    \"arguments\": {\n      \"stop\": \"3000\",\n      \"count\": 2\n    }\n  }\n}",
+        "options": {}
+      },
+      "id": "6",
+      "name": "4. Get Bus Arrivals - Stop 3000",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1130, 400],
+      "notes": "Obtiene los próximos 2 autobuses en la parada 3000"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://mcp-madrid.binoid.dev/mcp",
+        "authentication": "none",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "mcp-session-id",
+              "value": "={{ $('Extract Session ID').item.json.sessionId }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 5,\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"get_train_arrivals\",\n    \"arguments\": {\n      \"station\": \"Fuenlabrada Central\",\n      \"count\": 3\n    }\n  }\n}",
+        "options": {}
+      },
+      "id": "7",
+      "name": "5. Get Train Arrivals - Fuenlabrada",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1130, 600],
+      "notes": "Obtiene los próximos 3 trenes de Cercanías en Fuenlabrada Central"
+    }
+  ],
+  "connections": {
+    "When clicking 'Test workflow'": {
+      "main": [
+        [
+          {
+            "node": "1. Initialize MCP Session",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1. Initialize MCP Session": {
+      "main": [
+        [
+          {
+            "node": "Extract Session ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Session ID": {
+      "main": [
+        [
+          {
+            "node": "2. List Available Tools",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2. List Available Tools": {
+      "main": [
+        [
+          {
+            "node": "3. Get Metro Arrivals - Colombia",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "4. Get Bus Arrivals - Stop 3000",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "5. Get Train Arrivals - Fuenlabrada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-09T00:00:00.000Z",
+  "versionId": "1"
+}
