@@ -13,6 +13,8 @@ export interface TeleindicadorResponse {
   nombreest: string;       // Station name (e.g., "Colombia")
   anden: number;           // Platform number
   sentido: string;         // Direction/destination (e.g., "Aeropuerto T-4")
-  proximo: number;         // Next arrival in seconds (0 means arriving now)
-  siguiente: number | null; // Following arrival in seconds (null if unknown)
+  proximo: number;         // Next arrival in MINUTES from fechaHoraEmisionPrevision
+  siguiente: number | null; // Following arrival in MINUTES from fechaHoraEmisionPrevision (null if unknown)
+  fechaHoraEmisionPrevision: string; // ISO timestamp when prediction was made (e.g., "2025-11-10T19:31:51.000+01:00")
+  fechaHoraRegistro: string; // ISO timestamp when data was registered
 }
