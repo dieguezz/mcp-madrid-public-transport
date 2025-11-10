@@ -18,6 +18,8 @@ npm-debug.log*
 .claude/
 *.swp
 *.swo
+CLAUDE.md
+ENDPOINTS.md
 
 # OS
 .DS_Store
